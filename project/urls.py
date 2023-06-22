@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from forumtsk.views import forum_list , forum_detail , new_question
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('forum/',forum_list),
+    path('forum/<int:forum_id>',forum_detail),
+    path('forum/new',new_question)
+    
 ]
+
+urlpatterns +=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
