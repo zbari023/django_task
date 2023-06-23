@@ -13,5 +13,8 @@ def forum_detail(request,forum_id):
 
 
 def new_question(request):
-    form = Forumform()
+    if request.method == 'POST':
+        form = Forumform(request.POST)
+    else:
+        form = Forumform()
     return render(request,'forumtsk/new.html',{'formtsks':form})
