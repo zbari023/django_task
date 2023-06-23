@@ -14,7 +14,9 @@ def forum_detail(request,forum_id):
 
 def new_question(request):
     if request.method == 'POST':
-        form = Forumform(request.POST)
+        form = Forumform(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
     else:
         form = Forumform()
-    return render(request,'forumtsk/new.html',{'formtsks':form})
+    return render(request,'forumtsk/new.html',{'form':form})
