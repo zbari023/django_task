@@ -1,12 +1,18 @@
 from django.shortcuts import render
 from .models import Question
 from .forms import Forumform
+from django.views import generic
 
 # Create your views here.
 def forum_list(request):
     data = Question.objects.all()
     return render(request,'forumtsk/index.html',{'forumtsks':data})
 
+
+class Forumlist(generic.ListView):
+    model = Question
+    
+    
 def forum_detail(request,forum_id):
     data = Question.objects.get(id=forum_id)
     return render(request,'forumtsk/detail.html',{'forumtsks':data})
