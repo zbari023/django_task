@@ -4,19 +4,19 @@ from .forms import Forumform
 from django.views import generic
 
 # Create your views here.
-def forum_list(request):
-    data = Question.objects.all()
-    return render(request,'forumtsk/index.html',{'forumtsks':data})
 
 
-class Forumlist(generic.ListView):
+class Forumlist(generic.ListView):   # cbv dann url , dann rename den html , dann in html object_list or post_list 
+    model = Question
+
+
+class Forumdetail(generic.DetailView):   # cbv dann url , dann rename den html , dann in html object or post 
     model = Question
     
-    
-def forum_detail(request,forum_id):
-    data = Question.objects.get(id=forum_id)
-    return render(request,'forumtsk/detail.html',{'forumtsks':data})
 
+class Forumcreate(generic.CreateView):
+    model = Question
+    fields =['question','name','date','tags']
 
 def new_question(request):
     if request.method == 'POST':
