@@ -2,12 +2,15 @@ from django.shortcuts import render
 from .models import Question
 from .forms import Forumform
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
 
-class Forumlist(generic.ListView):   # cbv dann url , dann rename den html , dann in html object_list or post_list 
+class Forumlist(LoginRequiredMixin,generic.ListView):   # cbv dann url , dann rename den html , dann in html object_list or post_list 
     model = Question
+    login_url = '/admin/login'
 
 
 class Forumdetail(generic.DetailView):   # cbv dann url , dann rename den html , dann in html object or post 
