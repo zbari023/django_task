@@ -14,15 +14,18 @@ class Forumdetail(generic.DetailView):   # cbv dann url , dann rename den html ,
     model = Question
     
 
-class Forumcreate(generic.CreateView):
+class Forumcreate(generic.CreateView):  # cbv dann url , dann rename den html , dann in html
     model = Question
     fields =['question','name','date','tags']
+    success_url ='/forum/'
 
-def new_question(request):
-    if request.method == 'POST':
-        form = Forumform(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-    else:
-        form = Forumform()
-    return render(request,'forumtsk/new.html',{'form':form})
+class Forumedit(generic.UpdateView):
+    model = Question
+    fields =['question','name','date','tags']
+    success_url ='/forum/'
+    template_name = 'forum/edit.html'
+    
+class Forumdelete(generic.DeleteView):
+    model = Question
+    success_url ='/forum/'
+    

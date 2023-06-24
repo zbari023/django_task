@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from forumtsk.views import new_question , Forumlist , Forumdetail , Forumcreate
+from forumtsk.views import Forumlist , Forumdetail , Forumcreate , Forumedit , Forumdelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('forum/',Forumlist.as_view()),
     path('forum/<int:pk>',Forumdetail.as_view()),
-    path('forum/new',Forumcreate.as_view())
+    path('forum/new',Forumcreate.as_view()),
+    path('forum/<int:pk>/edit',Forumedit.as_view()),
+    path('forum/<int:pk>/delete',Forumdelete.as_view())
     
 ]
 
