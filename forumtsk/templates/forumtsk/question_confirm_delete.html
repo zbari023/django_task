@@ -1,0 +1,12 @@
+<form method="post">{% csrf_token %}
+    <div class="form-group">
+            Sure, you want to delete that object?<br>
+            <br>
+            <strong>{{ object }}</strong>
+            {{ form.errors }}
+            <br>
+            <br>
+            <input type="hidden" name="confirm_delete" value="confirm_delete">
+            <button type="submit" class="btn btn-primary">Delete</button>
+    </div>
+</form>

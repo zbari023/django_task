@@ -2,27 +2,33 @@ from django.shortcuts import render
 from .models import Question
 from .forms import Forumform
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
-def forum_list(request):
-    data = Question.objects.all()
-    return render(request,'forumtsk/index.html',{'forumtsks':data})
 
 
-class Forumlist(generic.ListView):
+class Forumlist(LoginRequiredMixin,generic.ListView):   # cbv dann url , dann rename den html , dann in html object_list or post_list 
+    model = Question
+    login_url = '/admin/login'
+
+
+class Forumdetail(generic.DetailView):   # cbv dann url , dann rename den html , dann in html object or post 
     model = Question
     
+
+class Forumcreate(generic.CreateView):  # cbv dann url , dann rename den html , dann in html
+    model = Question
+    fields =['question','name','date','tags']
+    success_url ='/forum/'
+
+class Forumedit(generic.UpdateView):
+    model = Question
+    fields =['question','name','date','tags']
+    success_url ='/forum/'
+    template_name = 'forum/edit.html'
     
-def forum_detail(request,forum_id):
-    data = Question.objects.get(id=forum_id)
-    return render(request,'forumtsk/detail.html',{'forumtsks':data})
-
-
-def new_question(request):
-    if request.method == 'POST':
-        form = Forumform(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-    else:
-        form = Forumform()
-    return render(request,'forumtsk/new.html',{'form':form})
+class Forumdelete(generic.DeleteView):
+    model = Question
+    success_url ='/forum/'
+    
